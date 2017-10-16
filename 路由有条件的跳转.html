@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>ui-router</title>
+</head>
+
+<body>
+    <div ng-app="app" ng-controller='ctrl'>
+    <p ui-sref='demoindex'>首页</p>
+    <p ui-sref='nav'>导航</p>
+        <div ui-view></div>
+    </div>
+    <script src='js/angular.min.js'></script>
+    <script src="js/angular-ui-router.min.js"></script>
+    <script>
+        var m = angular.module('app', ['ui.router']);
+        m.config(function ($stateProvider, $urlRouterProvider) {
+              $urlRouterProvider.otherwise("/demoindex");
+            $stateProvider
+                .state('demoindex', {
+                    url: '/demoindex',
+                    templateUrl: 'view/demoindex.html'
+                })
+                .state('nav', {
+                    url: '/nav',
+                    templateUrl: 'view/nav.html',
+                    // 路由里面使用控制器
+                    controller:'ctrl'
+                   
+                })
+        });
+        m.controller('ctrl',['$scope','$state',function($scope,$state){
+                $scope.go=function(url){
+                    $state.go(url)
+                }
+               
+        }])
+    </script>
+</body>
+
+</html>

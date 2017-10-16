@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>ui-router</title>
+</head>
+
+<body>
+    <div ng-app="app">
+        <div ui-view></div>
+    </div>
+    <script src='js/angular.min.js'></script>
+    <script src="js/angular-ui-router.min.js"></script>
+    <script>
+        var m = angular.module('app', ['ui.router']);
+        m.config(function ($stateProvider, $urlRouterProvider) {
+              $urlRouterProvider.otherwise("/synthesize");
+            $stateProvider
+                .state('synthesize', {
+                    url: '/synthesize',
+                    templateUrl: 'view/synthesize.html'
+                })
+                .state('synthesize.news', {
+                    url: '/news',
+                    // parent:'synthesize',//第二种写法
+                    template: '<div>新闻</div>'
+                })
+                 .state('game', {
+                    url: '/game',
+                    parent:'synthesize',//第二种写法
+                    template: '<div>游戏</div>'
+                })
+                 .state('login', {
+                    url: '/login',
+                    parent:'synthesize',//第二种写法
+                    template: '<div>登录</div>'
+                })
+
+        });
+    </script>
+</body>
+
+</html>

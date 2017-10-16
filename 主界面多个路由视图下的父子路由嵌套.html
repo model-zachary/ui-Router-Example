@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>ui-router</title>
+</head>
+
+<body>
+    <div ng-app="app">
+        <div ui-view=''></div>
+        <div ui-view='content'></div>
+    </div>
+    <script src='js/angular.min.js'></script>
+    <script src="js/angular-ui-router.min.js"></script>
+    <script>
+        var m = angular.module('app', ['ui.router']);
+        m.config(function ($stateProvider, $urlRouterProvider) {
+              $urlRouterProvider.otherwise("/my");
+            $stateProvider
+                .state('my', {
+                    url: '/my',
+                    views:{
+                        '@':{ //在顶级视图找 或者去掉@ 也可以 其实就是 找 同样条件的 ui-view 这里是 ''  ui-view=''
+                            templateUrl:'listsParentView/my.html'
+                        },
+                        'content':{
+                            template:'<div>content</div>'
+                        }
+                    }
+                })
+                .state('my.video', {
+                    url: '/video',
+                    views:{
+                        'son@my':{ //如果 父级 页面中（listsParentView/my.html）只有一个路由 可以不给路由取 名字 在这里就可以 '' 填写这个 如果有多个视图 那就要用名字区分 用这种 son路由视图名称@父级my
+                            templateUrl:'listsParentView/video.html'
+                        },
+                        'content@':{    //@顶级视图 不加则在子视图 可是在这里子视图 没有ui-view叫这个content的
+                             template:''       
+                        }
+                    }
+                })
+                
+
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>ui-router</title>
+</head>
+<style type="text/css">
+    .active{color:red;}
+</style>
+<body>
+    <div ng-app="app">
+    <p ui-sref='demoindex' ui-sref-active='active'>首页</p>
+    <p ui-sref='list' ui-sref-active='active'>列表页</p>
+        <div ui-view></div>
+    </div>
+    <script src='js/angular.min.js'></script>
+    <script src="js/angular-ui-router.min.js"></script>
+    <script>
+        var m = angular.module('app', ['ui.router']);
+        m.config(function ($stateProvider, $urlRouterProvider) {
+              $urlRouterProvider.otherwise("/demoindex");
+            $stateProvider
+                .state('demoindex', {
+                    url: '/demoindex',
+                    templateUrl: 'view/demoindex.html'
+                })
+                .state('list', {
+                    url: '/list',
+                    templateUrl: 'view/list.html',
+                    // 路由里面使用控制器
+                    controller:['$scope',function($scope){
+                        $scope.name='列表页'
+                    }]
+                })
+        });
+    </script>
+</body>
+
+</html>
